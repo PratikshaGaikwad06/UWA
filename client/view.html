@@ -23,16 +23,30 @@
 
     <!-- Application JavaScript Source -->
     <script type="text/javascript">
-      window.onload = function(){
-        var doc, DocumentRow, docRow1;
-
-        doc = new UWA.Class.Model({
+      define("MyProject/Model/Doc", [
+        "UWA/Class/Model",
+        "UWA/Class/Debug",
+        "UWA/String",
+      ], function (Model, Debug, UWAString) {
+        "use strict";
+        var doc = new UWA.Class.Model({
           title: "The Big Nowhere",
           author: "James Ellroy",
           publisher: "Rivages Noir",
         });
 
-        DocumentRow = UWA.Class.View.extend(UWA.Class.Debug, {
+        return doc;
+      });
+
+      define("MyProject/View/DocumentRow", [
+        "UWA/Class/View",
+        "UWA/Class/Debug",
+        "UWA/String",
+      ], function (View, Debug, UWAString) {
+        "use strict";
+
+        console.log("inside view doc");
+        var DocumentRow = UWA.Class.View.extend(UWA.Class.Debug, {
           tagName: "li",
 
           className: "document-row",
@@ -49,6 +63,7 @@
           },
 
           render: function () {
+            console.log("rendering");
             // Here typically we should render a compiled template...
             // Also note that there is no need to re-bind DOM events
             // thanks to event delegation handled by the 'container'
@@ -66,10 +81,12 @@
               },
               {
                 tag: "button",
+                text:"Button1",
                 class: "edit",
               },
               {
                 tag: "button",
+                text:"Button2",
                 class: "delete",
               },
             ]);
@@ -138,35 +155,38 @@
         });
 
         UWA.Event.onDomReady(function () {
-          docRow1 = new DocumentRow({
-            model: doc,
-            id: "document-row-" + doc.id,
-          });
+          require(["MyProject/Model/Doc", "MyProject/View/DocumentRow"], function (doc, docRow1) {
+            docRow1 = new DocumentRow({
+              model: doc,
+              id: "document-row-" + doc.id,
+            });
 
-          docRow1.addEvent("onOpen", function (doc) {
-            alert(
-              UWA.String.format(
-                "This is the abstract for document {0}",
-                doc.get("title")
-              )
-            );
-          });
+            docRow1.addEvent("onOpen", function (doc) {
+              alert(
+                UWA.String.format(
+                  "This is the abstract for document {0}",
+                  doc.get("title")
+                )
+              );
+            });
 
-          docRow1.addEvent("onOpenEditDialog", function (doc) {
-            alert(
-              UWA.String.format(
-                "This is the editor for document {0}",
-                doc.get("title")
-              )
-            );
-          });
+            docRow1.addEvent("onOpenEditDialog", function (doc) {
+              alert(
+                UWA.String.format(
+                  "This is the editor for document {0}",
+                  doc.get("title")
+                )
+              );
+            });
 
-          docRow1.render().inject(document.getElementById("docs"));
+            docRow1.render().inject(document.getElementById("docs"));
+          });
         });
-      }
+      });
     </script>
   </head>
   <body>
-    <p>Loading...</p>
+    <ul id="docs"></ul>
+    <!-- <p>Loading...</p> -->
   </body>
 </html>
