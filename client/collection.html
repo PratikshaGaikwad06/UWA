@@ -138,7 +138,9 @@
         postsList.fetch({
           reset: true,
           onComplete: function (posts, response, options) {
-            console.log("oncomplete");
+            render();
+            console.log(posts.toArray());
+            console.log("oncomplete" + response);
             posts.pluck("title").forEach(function (title) {
               UWA.log(title);
             });

@@ -30,11 +30,12 @@
       ], function (Model, Debug, UWAString) {
         "use strict";
         var doc = new UWA.Class.Model({
+          id: 1,
           title: "The Big Nowhere",
           author: "James Ellroy",
           publisher: "Rivages Noir",
         });
-
+        
         return doc;
       });
 
@@ -48,7 +49,7 @@
         console.log("inside view doc");
         var DocumentRow = UWA.Class.View.extend(UWA.Class.Debug, {
           tagName: "li",
-
+          
           className: "document-row",
 
           domEvents: {
@@ -58,6 +59,8 @@
           },
 
           setup: function () {
+            console.log("inside setup");
+            // this.collection.fetch(); // onComplete() --> posts --> render()
             this.listenTo(this.model, "onChange", this.render);
             this.log("initialized!");
           },
@@ -68,11 +71,13 @@
             // Also note that there is no need to re-bind DOM events
             // thanks to event delegation handled by the 'container'
             // of the View !
+
+            // new UWA Datagrid(  columns, data:this.collection.)
             this.container.setContent([
               {
                 tag: "span",
                 class: "icon",
-                text: "",
+                text: "hello",
               },
               {
                 tag: "span",
@@ -90,7 +95,9 @@
                 class: "delete",
               },
             ]);
+            console.log(this);
             return this;
+            
           },
 
           open: function (domClickEvent) {
@@ -101,11 +108,16 @@
 
           openEditDialog: function (domClickEvent) {
             this.dispatchEvent("onOpenEditDialog", [this.model]);
+            this.model.set("title","new title")
             // this event can be caught by the parent view to display
             // the doc editor in an overlay panel for example.
           },
 
+
+
           delete: function (domClickEvent) {
+            
+            console.log("inside delete func");
             var that = this;
             that.disable(); // to disable user's interaction with the
             // doc being removed.
@@ -113,23 +125,30 @@
             // if deletion in the backend succeeds, this view is destroyed
             // otherwise we warn our parent view that deletion failed and
             // enable this view.
-            that.model.destroy(
-              {
-                onComplete: that.destroy.bind(that),
-                onFailure: function (model, response, options) {
-                  var msg = UWA.String.format(
-                    "Oops! Failed to delete doc {0} because {1}.",
-                    that.model.get("title"),
-                    response
-                  );
-                  that.dispatchEvent("onError", [msg]);
-                  that.enable();
-                },
-              },
-              {
-                wait: true,
-              }
-            );
+            // console.log("delete" + that.model.destroy);
+            this.destroy()
+            // that.model.destroy(
+            //   {
+            //     onComplete: function(){
+  
+
+            //       that.destroy.bind(that)(),
+            //       console.log("oncomplete" + that.model.destroy);
+            //     },
+            //     onFailure: function (model, response, options) {
+            //       var msg = UWA.String.format(
+            //         "Oops! Failed to delete doc {0} because {1}.",
+            //         that.model.get("title"),
+            //         response
+            //       );
+            //       that.dispatchEvent("onError", [msg]);
+            //       that.enable();
+            //     },
+            //   },
+            //   {
+            //     // wait: true,
+            //   }
+            // );
           },
 
           disable: function (timeOut) {
@@ -155,9 +174,11 @@
         });
 
         UWA.Event.onDomReady(function () {
+          console.log("inside onDomReady");
           require(["MyProject/Model/Doc", "MyProject/View/DocumentRow"], function (doc, docRow1) {
             docRow1 = new DocumentRow({
-              model: doc,
+              //collection: posts,
+              model:doc,
               id: "document-row-" + doc.id,
             });
 
