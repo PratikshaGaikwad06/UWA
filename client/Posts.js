@@ -7,6 +7,9 @@ define("Posts", [
     var Posts = Collection.extend({
       url: "/posts",
       model: Post,
+      // parse: function (response) {
+      //     return response._attributes;
+      // }
     });
 
     console.log("inside define collection");

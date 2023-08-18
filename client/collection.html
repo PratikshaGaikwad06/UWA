@@ -110,7 +110,8 @@
         //   message: "message 5",
         // });
         // Now, to get the array of the models in the collection :
-        // var posts = postsList.toArray();
+        var posts = postsList.toArray();
+        console.log(posts);
         // Models and their attributes can be accessed this way :
         // postsList.at(0).get("title"); // at() returns the post in the collection at the
         // given position 0. Note that collections are
@@ -135,6 +136,7 @@
         // });
         // find() works just like filter() but returns the first model satisfying the criterion.
         // Let's fetch data from the backend (after a reset to empty it) :
+        console.log(postsList);
         postsList.fetch({
           reset: true,
           onComplete: function (posts, response, options) {

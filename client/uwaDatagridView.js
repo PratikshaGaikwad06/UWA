@@ -17,15 +17,19 @@ define("UWADatagridView", [
     //     "click button.delete": "delete",
     //   },
 
+    
       setup: function () {
+        var that = this;
         console.log("inside setup");
-        postsList.fetch({
+        this.collection.fetch({
             reset: true,
             onComplete: function (posts, response, options) {
               // render();
-              // console.log(posts.toArray());
+              console.table(posts.toArray());
+            //   console.log();
               console.log("oncomplete" + response);  
-              this.render();            
+              that.render();
+              console.log(that.render);
             },
             onFailure: function (posts, response, options) {
               UWA.log("Oupss");
@@ -39,54 +43,31 @@ define("UWADatagridView", [
 
       render: function () {
         console.log("rendering");
+        // console.log(this.collection.toArray());
+        console.log(JSON.parse(JSON.stringify(this.collection.toArray())));
 
         // Create dataGrid instance
         uwaDatagridView1 = new UWA.Controls.DataGrid({
+            
             className: 'my-dataGrid',
             columns: [
                 {
                     dataIndex: 'id',
-                    isFixed: true,
-                    noSortable: true,
-                    isFirst: true
+                    // isFixed: true,
+                    // noSortable: true,
+                    // isFirst: true
                 },
                 {
-                    text: 'Date',
-                    dataIndex: 'date',
-                    format: function (value) {
-                        return UWA.Date.strftime(value, '%d %B %Y');
-                    },
-                    sortKey: function (value) {
-                        return value.getMonth();
-                    },
-                    isFixed: true,
-                    className: 'date-column'
+                    text: 'title',
+                    dataIndex: 'title',
+                    
                 },
                 {
-                    text: 'Name',
-                    dataIndex: 'name',
-                    sortKey: function (value) {
-                        return value.split(' ').slice(1).join(' ');
-                    }
-                },
-                {
-                    text: 'First Value',
-                    dataIndex: 'first_value'
-                },
-                {
-                    text: 'Second Value',
-                    dataIndex: 'second_value'
-                },
-                {
-                    text: 'Third Value',
-                    dataIndex: 'third_value'
-                },
-                {
-                    text: 'Fourth Value',
-                    dataIndex: 'fourth_value'
+                    text: 'message',
+                    dataIndex: 'message'
                 }
             ],
-            // data: this.collection
+            data: JSON.parse(JSON.stringify(this.collection.toArray())),
             // ],
             // data: [
             //     {'id': 1, 'date': new Date('2012-07-01'), 'name': 'Foo Bar 1', 'first_value': '100', 'second_value': '15 256', 'third_value': '2 000', 'fourth_value': '3 200',
