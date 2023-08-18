@@ -1,13 +1,7 @@
-define("MyProject/Collection/Posts", [
+define("Posts", [
     "UWA/Class/Collection",
-    "MyProject/Model/Post",
+    "Post",
   ], function (Collection, Post) {
-    
-
-    // This example is a brief overview of some of the methods/APIs offered
-    // by UWA.Class.Collection. Have a look at the detailed documentation of each API
-    // if needed.
-
     
     // Given this model definition :
     var Posts = Collection.extend({

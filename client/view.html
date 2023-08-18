@@ -35,7 +35,7 @@
           author: "James Ellroy",
           publisher: "Rivages Noir",
         });
-        
+
         return doc;
       });
 
@@ -176,6 +176,7 @@
         UWA.Event.onDomReady(function () {
           console.log("inside onDomReady");
           require(["MyProject/Model/Doc", "MyProject/View/DocumentRow"], function (doc, docRow1) {
+            
             docRow1 = new DocumentRow({
               //collection: posts,
               model:doc,

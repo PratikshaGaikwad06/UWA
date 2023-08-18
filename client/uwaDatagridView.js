@@ -1,11 +1,11 @@
-define("MyProject/View/UWADatagridView", [
+define("UWADatagridView", [
     "UWA/Class/View",
     "UWA/Class/Debug",
     "UWA/String",
   ], function (View, Debug, UWAString) {
     "use strict";
 
-    console.log("inside view doc");
+    console.log("inside view");
     var UWADatagridView = UWA.Class.View.extend(UWA.Class.Debug, {
       tagName: "div",
 
@@ -25,7 +25,6 @@ define("MyProject/View/UWADatagridView", [
       },
 
       render: function () {
-
         console.log("rendering");
 
         // Create dataGrid instance
@@ -95,5 +94,5 @@ define("MyProject/View/UWADatagridView", [
       },
     });
 
-  
+  return UWADatagridView;
   });

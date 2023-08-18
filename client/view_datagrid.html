@@ -21,14 +21,20 @@
       src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"
     ></script>
 
+    <script
+      type="text/javascript"
+      src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Controls_DataGrid.js"
+    ></script>
+
     <!-- Application JavaScript Source -->
     <script type="text/javascript">
       UWA.Event.onDomReady(function () {
       console.log("inside onDomReady");
       require([
-        "MyProject/Collection/Posts",
-        "MyProject/View/UWADatagridView",
-      ], function (Posts, uwaDatagridView1) {
+        "Posts",
+        "UWADatagridView",
+      ], function (Posts, UWADatagridView) {
+        console.log();
         var postsList = new Posts();
         uwaDatagridView1 = new UWADatagridView({
           collection: postsList,

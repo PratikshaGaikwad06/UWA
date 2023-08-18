@@ -1,4 +1,4 @@
-define("MyProject/Model/Post", [
+define("Post", [
     "UWA/Class/Model",
     "UWA/Class/Debug",
     "UWA/String",
@@ -17,11 +17,6 @@ define("MyProject/Model/Post", [
       setup: function () {
         var that = this;
         that.log("Welcome to this post");
-      },
-
-      // Validate data before you set or save it :
-      validate: function (attributes) {
-        // Add validation logic here if needed
       },
     });
 
