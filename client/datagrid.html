@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:widget="http://www.netvibes.com/ns/"
+>
+  <head>
+    <!-- Application Infos -->
+    <title>UWA.Controls.DataGrid sample</title>
+    <meta
+      name="description"
+      content="Sample code for UWA.Controls.DataGrid usage"
+    />
+    <meta name="author" content="Netvibes" />
+    <meta name="apiVersion" content="1.3" />
+    <meta name="debugMode" content="true" />
+    <meta name="strictMode" content="true" />
+
+    <!-- UWA Environment -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css"
+    />
+    <script
+      type="text/javascript"
+      src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Controls_DataGrid.js"
+    ></script>
+
+    <!-- Application Preferences -->
+    <widget:preferences>
+      <widget:preference
+        type="boolean"
+        name="sortable"
+        label="Enable sorting data grid"
+        defaultValue="false"
+      />
+    </widget:preferences>
+
+    <!-- Application Styles -->
+    <style type="text/css">
+      .my-dataGrid {
+        height: 240px;
+      }
+
+      .my-dataGrid td,
+      .my-dataGrid th {
+        white-space: nowrap;
+      }
+
+      .my-dataGrid .fixed-column {
+        background-color: #fff;
+      }
+    </style>
+
+    <!-- Application Source -->
+    <script type="text/javascript">
+      //<![CDATA[
+      /*global UWA, widget*/
+      (function () {
+        "use strict";
+
+        /*
+                We create the global MyWidget object (it could be any other name).
+                This object will be used to store variables and function.
+            */
+        var MyWidget = {
+          /*
+                    The onLoad() function is the first one, triggered by widget.onLoad.
+                    Its use is to display a "Loading" message, then call the next method.
+                */
+          onLoad: function () {
+            // Clear widget content
+            widget.body.empty();
+
+            // Create dataGrid instance
+            MyWidget.dataGrid = new UWA.Controls.DataGrid({
+              className: "my-dataGrid",
+              columns: [
+                {
+                  dataIndex: "id",
+                  isFixed: true,
+                  noSortable: true,
+                  isFirst: true,
+                },
+                {
+                  text: "Date",
+                  dataIndex: "date",
+                  format: function (value) {
+                    return UWA.Date.strftime(value, "%d %B %Y");
+                  },
+                  sortKey: function (value) {
+                    return value.getMonth();
+                  },
+                  isFixed: true,
+                  className: "date-column",
+                },
+                {
+                  text: "Name",
+                  dataIndex: "name",
+                  sortKey: function (value) {
+                    return value.split(" ").slice(1).join(" ");
+                  },
+                },
+                {
+                  text: "First Value",
+                  dataIndex: "first_value",
+                },
+                {
+                  text: "Second Value",
+                  dataIndex: "second_value",
+                },
+                {
+                  text: "Third Value",
+                  dataIndex: "third_value",
+                },
+                {
+                  text: "Fourth Value",
+                  dataIndex: "fourth_value",
+                },
+              ],
+              data: [
+                {
+                  id: 1,
+                  date: new Date("2012-07-01"),
+                  name: "Foo Bar 1",
+                  first_value: "100",
+                  second_value: "15 256",
+                  third_value: "2 000",
+                  fourth_value: "3 200",
+                  className: "class-first-line",
+                  isFixed: true,
+                },
+                {
+                  id: 2,
+                  date: new Date("2012-03-10"),
+                  name: "Foo Bar 2",
+                  first_value: "10 200",
+                  second_value: "15 250",
+                  third_value: "145 000",
+                  fourth_value: "15 000",
+                },
+                {
+                  id: 3,
+                  date: new Date("2012-10-08"),
+                  name: "Foo Bar 3",
+                  first_value: "120 400",
+                  second_value: "150 226",
+                  third_value: "45 000",
+                  fourth_value: "100",
+                },
+                {
+                  id: 4,
+                  date: new Date("2012-10-12"),
+                  name: "Foo Bar 4",
+                  first_value: "10 000",
+                  second_value: "15 200",
+                  third_value: "45 001",
+                  fourth_value: "30",
+                },
+                {
+                  id: 5,
+                  date: new Date("2012-02-10"),
+                  name: "Foo Bar 5",
+                  first_value: "10 000",
+                  second_value: "15 006",
+                  third_value: "45 000",
+                  fourth_value: "13 000",
+                },
+                {
+                  id: 6,
+                  date: new Date("2012-04-10"),
+                  name: "Foo Bar 6",
+                  first_value: "15 000",
+                  second_value: "22 256",
+                  third_value: "5 480",
+                  fourth_value: "30 010",
+                },
+                {
+                  id: 7,
+                  date: new Date("2012-05-10"),
+                  name: "Foo Bar 7",
+                  first_value: "10 000",
+                  second_value: "15 256",
+                  third_value: "45 070",
+                  fourth_value: "3000",
+                },
+                {
+                  id: 8,
+                  date: new Date("2012-06-10"),
+                  name: "Foo Bar 8",
+                  first_value: "10 000",
+                  second_value: "100 256",
+                  third_value: "45 010",
+                  fourth_value: "3000",
+                },
+                {
+                  id: 9,
+                  date: new Date("2012-07-10"),
+                  name: "Foo Bar 9",
+                  first_value: "188 000",
+                  second_value: "1 256",
+                  third_value: "45 400",
+                  fourth_value: "3000",
+                },
+                {
+                  id: 10,
+                  date: new Date("2012-08-10"),
+                  name: "Foo Bar 10",
+                  first_value: "10 000",
+                  second_value: "15 256",
+                  third_value: "4 000",
+                  fourth_value: "3000",
+                },
+              ],
+              sortable: widget.getBool("sortable"),
+            }).inject(widget.body);
+
+            MyWidget.dataGrid.addScroller();
+          },
+        };
+
+        /*
+                The "onLoad" event is the very first event triggered when
+                the widget is fully loaded or when the preferences are validated.
+
+                Here, we add MyWidget.onLoad() function as "onLoad" event
+                listener on the widget.
+            */
+        widget.addEvent("onLoad", MyWidget.onLoad);
+      })();
+      //]]>
+    </script>
+  </head>
+  <body>
+    <p>Loading ...</p>
+  </body>
+</html>
