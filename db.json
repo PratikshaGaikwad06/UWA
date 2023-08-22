@@ -1,29 +1,24 @@
 {
   "posts": [
     {
-      "id" : 1,
+      "id": 1,
       "title": "json-server",
-      "message": "Scheherazade"
+      "message": "messgage1"
     },
     {
-      "id" : 2,
+      "id": 2,
       "title": "title2",
-      "message": "Scheherazade"
+      "message": "message2"
     },
     {
       "id": 3,
       "title": "dfd-server",
-      "message": "Scheherazade"
+      "message": "message3"
     },
     {
       "id": 4,
       "title": "title4",
       "message": "message4"
-    },
-    {
-      "id": 5,
-      "title": "title5",
-      "message": "messgae5"
     }
   ],
   "persons": [
@@ -48,6 +43,30 @@
       "name": "riya",
       "age": 40,
       "child": ""
+    },
+    {
+      "name": "ritu",
+      "age": 16,
+      "child": "Shiloh",
+      "id": 7
+    },
+    {
+      "name": "ritu",
+      "age": 16,
+      "child": "Shiloh",
+      "id": 8
+    },
+    {
+      "name": "ritu",
+      "age": 16,
+      "child": "Shiloh",
+      "id": 9
+    },
+    {
+      "name": "ritu",
+      "age": 16,
+      "child": "Shiloh",
+      "id": 10
     }
   ],
   "comments": [],

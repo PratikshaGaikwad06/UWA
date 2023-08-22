@@ -101,6 +101,7 @@
           },
 
           open: function (domClickEvent) {
+            console.log(domClickEvent);
             this.dispatchEvent("onOpen", [this.model]);
             // this event can be caught by the parent view to display
             // the doc abstract in an overlay panel for example.

@@ -10,8 +10,8 @@ define("Post", [
       urlRoot: "/posts",
 
       defaults: {
-        title: "json-server",
-        message: "Scheherazade",
+        title: "defaulttitle",
+        message: "defaultmessage",
       },
 
       setup: function () {
