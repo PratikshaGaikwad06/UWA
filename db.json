@@ -3,22 +3,22 @@
     {
       "id": 1,
       "title": "json-server",
-      "message": "messgage1"
+      "message": "message1"
     },
     {
-      "id": 2,
-      "title": "title2",
-      "message": "message2"
+      "title": "Post5 title",
+      "message": "message 5",
+      "id": 8
     },
     {
-      "id": 3,
-      "title": "dfd-server",
-      "message": "message3"
+      "title": "Post5 title",
+      "message": "message 5",
+      "id": 9
     },
     {
-      "id": 4,
-      "title": "title4",
-      "message": "message4"
+      "title": "Post5 title",
+      "message": "message 5",
+      "id": 10
     }
   ],
   "persons": [
@@ -46,27 +46,9 @@
     },
     {
       "name": "ritu",
-      "age": 16,
+      "age": 38,
       "child": "Shiloh",
       "id": 7
-    },
-    {
-      "name": "ritu",
-      "age": 16,
-      "child": "Shiloh",
-      "id": 8
-    },
-    {
-      "name": "ritu",
-      "age": 16,
-      "child": "Shiloh",
-      "id": 9
-    },
-    {
-      "name": "ritu",
-      "age": 16,
-      "child": "Shiloh",
-      "id": 10
     }
   ],
   "comments": [],

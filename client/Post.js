@@ -1,8 +1,7 @@
 define("Post", [
     "UWA/Class/Model",
-    "UWA/Class/Debug",
-    "UWA/String",
-  ], function (Model, Debug, UWAString) {
+    "UWA/Class/Debug"
+  ], function (Model, Debug) {
     "use strict";
 
     console.log("inside define model");

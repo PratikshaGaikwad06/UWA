@@ -137,7 +137,22 @@
         });
 
         alert(angelina.isNew() + " in alert"); // alerts 'true'
-        
+        angelina.save(
+          // {
+          //   age: 16,
+            
+          // },
+          {
+            onComplete: function (person, response) {
+              person.log("dfdfs");
+              console.log("Successfully saved!");
+            },
+            onFailure: function (person, error) {
+              console.log(person.toJSON());
+              person.log(error.responseText);
+            },
+          }
+        );
         // angelina.adopt("Pax Thien");
 
         // var child = angelina.get("child"); // returns 'Pax Thien'
@@ -146,17 +161,17 @@
         // will be performed.
         // The backend should persist the data and return a response containing the new `id`
         angelina.save(
-          {
-            age: 16,
+          // {
+          //   age: 16,
             
-          },
+          // },
           {
-            // wait: true,
             onComplete: function (person, response) {
-              person.log("Successfully saved!");
+              person.log("dfdfs");
+              console.log("Successfully saved!");
             },
             onFailure: function (person, error) {
-              person.log(person.toJSON());
+              console.log(person.toJSON());
               person.log(error.responseText);
             },
           }

@@ -15,191 +15,81 @@ define("UWADatagridView", [
 
     domEvents: {
       "click button.post-btn": "postContent",
+      "click button.put-btn": "putContent",
+      "click button.delete-btn": "deleteContent",
     },
 
-    postContent: function (domEvent) {
-      UWA.log("I was clicked!");
+    postContent: function () {
+      var that = this;
+      UWA.log("post was clicked!");
+        that.collection.create({title: "Post5 title",
+        message: "message 5"},{
+            onComplete: function (post, response) {
+              console.log(response);
+              console.log("Successfully saved!");
+            },
+            onFailure: function (post, error) {
+              console.log(post.JSON());
+              post.log(error.responseText);
+            },
+        });
     },
 
-    // getContent: function () {
-    //   console.log("inside get func");
+    putContent: function () {
+      var that = this;
+      UWA.log("put was clicked!");
+        that.collection.at(1).save(
+          { title: "title10" },
+          {
+            // wait: true,
+            onComplete: function (post4, response) {
+              console.log("Successfully updated title!");
+            },
+            onFailure: function (post4, error) {
+              console.log(post4.toJSON());
+              post4.log(error.responseText);
+            },
+          }
+        );
+    },
 
-    //   var that = this; // Store the reference to this (UWADatagridView)
-    //   this.collection.fetch({
-    //     reset: true,
-    //     onComplete: function (posts, response, options) {
-    //       // Handle the completion of the fetch operation as needed
-    //       console.table(posts.toArray());
-    //       console.log("oncomplete" + response);
-    //        // Update the DataGrid's data with the fetched data
-    //       // uwaDatagridView1.setData(JSON.parse(JSON.stringify(posts.toArray())));
-    //       // Render the DataGrid
-    //       // uwaDatagridView1.render();
-    //       that.render(); // Use that to call the render method
-    //       // console.log(that.render);
-    //     },
-    //     onFailure: function (posts, response, options) {
-    //       // Handle fetch failure
-    //       UWA.log("Oupss");
-    //       console.log("onfailure");
-    //     },
-    //   });
-    //   // this.dispatchEvent("getContent", [this.model]);
-    //   // this.model.set("title","new title")
-    //   // this event can be caught by the parent view to display
-    //   // the doc editor in an overlay panel for example.
-    // },
+    deleteContent: function () {
+      var that = this;
+      UWA.log("delete was clicked!");
+        that.collection.at(1).destroy({
+          onComplete: function (post4, response) {
+            console.log("Successfully deleted title!");
+          },
+          onFailure: function (post4, error) {
+            console.log(post4.toJSON());
+            post4.log(error.responseText);
+          },
+        });
+    },
 
+    
     setup: function () {
       var that = this;
-      console.log("inside setup");
-      // Call the fetchData function to fetch data during setup
-      // this.collection.fetch({
-      //   reset: true,
-      //   onComplete: function (posts, response, options) {
-      //     // Handle the completion of the fetch operation as needed
-      //     console.table(posts.toArray());
-      //     console.log("oncomplete" + response);
-      //     that.render();
-      //     console.log(that.render);
-      //     // Trigger a re-render or update your view with the new data
-      //   },
-      //   onFailure: function (posts, response, options) {
-      //     // Handle fetch failure
-      //     UWA.log("Oupss");
-      //     console.log("onfailure");
-      //   },
-      // });
-      // this.getContent();
+      console.log("inside setup");      
       this.fetchData();
-      // this.render(); // Call the render method after fetching data
       // this.collection.fetch(); // onComplete() --> posts --> render()
-      this.listenTo(this.collection, "onAdd", this.render);
+      this.listenTo(this.collection, "onChange", this.render);
+      this.listenTo(this.collection, "onRemove", this.render);
       this.log("initialized!");
     },
 
+
     render: function () {
-      var that = this;
       console.log("rendering");
-      // console.log(this.collection.toArray());
       console.log(JSON.parse(JSON.stringify(this.collection.toArray())));
 
-      // Create a button container div
-      var buttonContainer = UWA.createElement("div", {
-        class: "button-container",
-      });
-      require(["Post"], function (Post) {
-        var post7 = new Post({
-          "id" : 5,
-          // title: "title7",
-          // message: "message7",
-        });
-       
-
-        // "Get" button
-        var getButton = UWA.createElement("button", {
-          class: "get-btn",
-          text: "Get",
-          events: {
-            click: function (event) {
-              // var that = this; // Store the reference to the view
-              console.log(that);
-              // that.fetchData();
-              that.collection.fetch({
-                reset: true,
-                onComplete: function (posts, response, options) {
-                  this.fetchData();
-                  // Handle the completion of the fetch operation as needed
-                  console.table(posts.toArray());
-                  console.log("oncomplete" + response);
-                },
-                onFailure: function (posts, response, options) {
-                  // Handle fetch failure
-                  UWA.log("Oupss");
-                  console.log("onfailure");
-                },
-              });
-            //   // this.fetchData();
-            }.bind(this),
-
-            // click: getContent,
-            // click: function (event) {
-            //   // this.fetchData();
-            //   // Handle the click event for the "Get" button
-            //   // You can add your logic here
-            // },
-          },
-        });
-// that.collection.add(post7);
-        // "Post" button
-        var postButton = UWA.createElement("button", {
-          class: "post-btn",
-          text: "Post",
-          events: {
-            click: function (event) {
-              console.log("post method called");
-              alert(post7.isNew() + " in alert"); // alerts 'true'
-              post7.save({
-                onComplete: function (post7, response) {
-                  
-                  console.log("Successfully saved!");
-                },
-                onFailure: function (post7, error) {
-                  post7.log(post7.toJSON());
-                  post7.log(error.responseText);
-                },
-              });
-            },
-          },
-        });
-
-        // "Put" button
-        var putButton = UWA.createElement("button", {
-          class: "put-btn",
-          text: "Put",
-          events: {
-            click: function (event) {
-              post7.save(
-                { title: "title10" },
-                {
-                  // wait: true,
-                  onComplete: function (post7, response) {
-                    console.log("Successfully updated title!");
-                  },
-                  onFailure: function (post7, error) {
-                    console.log(post7.toJSON());
-                    post7.log(error.responseText);
-                  },
-                }
-              );
-            },
-          },
-        });
-
-        // Create a "Delete" button
-        var deleteButton = UWA.createElement("button", {
-          class: "delete-btn",
-          text: "Delete",
-          events: {
-            click: function (event) {
-              post7.destroy();
-            },
-          },
-        });
-
-        buttonContainer.appendChild(getButton);
-        buttonContainer.appendChild(postButton);
-        buttonContainer.appendChild(putButton);
-        buttonContainer.appendChild(deleteButton);
-      });
-
-      this.container.appendChild(buttonContainer);
-
+      
       // Create dataGrid instance
       uwaDatagridView1 = new UWA.Controls.DataGrid({
         className: "my-dataGrid",
         columns: [
           {
+            text: "id",
             dataIndex: "id",
             // isFixed: true,
             // noSortable: true,
@@ -216,8 +106,27 @@ define("UWADatagridView", [
         ],
         data: JSON.parse(JSON.stringify(this.collection.toArray())),
         sortable: widget.getBool("sortable"),
-      }).inject(this.container);
+      });
 
+      this.container.setContent([
+        {
+          tag: "button",
+          class: "post-btn",
+          text: "POST",
+        },
+        {
+          tag: "button",
+          class: "put-btn",
+          text: "UPDATE",
+        },
+        {
+          tag: "button",
+          class: "delete-btn",
+          text: "DELETE",
+        },
+      ]);
+
+      uwaDatagridView1.inject(this.container);
       uwaDatagridView1.addScroller();
 
       return this;
