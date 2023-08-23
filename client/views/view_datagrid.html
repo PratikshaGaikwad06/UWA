@@ -6,7 +6,7 @@
 >
   <head>
     <!-- Application Metas -->
-    <title>Title of the App</title>
+    <title>View DataGrid</title>
     <meta name="author" content="John Doe" />
     <meta name="description" content="A descriptive description" />
 
@@ -29,21 +29,32 @@
     <!-- Application JavaScript Source -->
     <script type="text/javascript">
       UWA.Event.onDomReady(function () {
-      console.log("inside onDomReady");
-      require([
-        "Posts",
-        "UWADatagridView",
-      ], function (Posts, UWADatagridView) {
-        console.log();
-        var postsList = new Posts();
-        uwaDatagridView1 = new UWADatagridView({
-          collection: postsList,
+        console.log("inside onDomReady");
+        require([
+          "scripts/models/Posts",
+          "scripts/models/Post",
+          "scripts/GridViews/UWADatagridView",
+        ], function (Posts, Post, UWADatagridView) {
+          console.log();
+          var postsList = new Posts();
+          uwaDatagridView1 = new UWADatagridView({
+            collection: postsList,
+          });
+          // uwaDatagridView1.render().inject(document.getElementById("docs"));
+          uwaDatagridView1.inject(document.getElementById("docs"));
+        });
+      });
+    </script>
+
+    <script>
+      function addNewPost() {
+        const post = new Post({
+          title: "Sample title",
+          message: "Sample message",
         });
 
-        // uwaDatagridView1.render().inject(document.getElementById("docs"));
-        uwaDatagridView1.inject(document.getElementById("docs"))
-      });
-    });
+        post.save();
+      }
     </script>
   </head>
   <body>

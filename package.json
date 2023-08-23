@@ -95,8 +95,8 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "start": "json-server --watch -p 3000 -s client db.json",
-    "dev": "nodemon app.js"
+    "start": "json-server -p 3000 -s client db.json",
+    "dev": "nodemon --watch client --ext html,js --exec \"json-server -p 3000 -s client --watch db.json\""
   },
   "keywords": [],
   "author": "",

@@ -1,12 +1,12 @@
 {
   "posts": [
     {
-      "id" : 1,
+      "id": 1,
       "title": "json-server",
       "message": "Scheherazade"
     },
     {
-      "id" : 2,
+      "id": 2,
       "title": "title2",
       "message": "Scheherazade"
     },
@@ -24,6 +24,16 @@
       "id": 5,
       "title": "title5",
       "message": "messgae5"
+    },
+    {
+      "title": "Sample Title",
+      "message": "Sample Message",
+      "id": 6
+    },
+    {
+      "title": "Sample Title",
+      "message": "Sample Message",
+      "id": 7
     }
   ],
   "persons": [

@@ -1,4 +1,4 @@
-define("Post", [
+define("scripts/models/Post", [
     "UWA/Class/Model",
     "UWA/Class/Debug",
     "UWA/String",

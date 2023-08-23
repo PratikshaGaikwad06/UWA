@@ -1,6 +1,6 @@
-define("Posts", [
+define("scripts/models/Posts", [
     "UWA/Class/Collection",
-    "Post",
+    "scripts/models/Post",
   ], function (Collection, Post) {
     
     // Given this model definition :
@@ -14,5 +14,5 @@ define("Posts", [
 
     console.log("inside define collection");
 
-    return Posts;
+    return Posts; 
   });
