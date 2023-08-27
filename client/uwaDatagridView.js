@@ -42,12 +42,12 @@ define("UWADatagridView", [
           { title: "title10" },
           {
             // wait: true,
-            onComplete: function (post4, response) {
+            onComplete: function (post, response) {
               console.log("Successfully updated title!");
             },
-            onFailure: function (post4, error) {
-              console.log(post4.toJSON());
-              post4.log(error.responseText);
+            onFailure: function (post, error) {
+              console.log(post.toJSON());
+              post.log(error.responseText);
             },
           }
         );
@@ -57,12 +57,12 @@ define("UWADatagridView", [
       var that = this;
       UWA.log("delete was clicked!");
         that.collection.at(1).destroy({
-          onComplete: function (post4, response) {
+          onComplete: function (post, response) {
             console.log("Successfully deleted title!");
           },
-          onFailure: function (post4, error) {
+          onFailure: function (post, error) {
             console.log(post4.toJSON());
-            post4.log(error.responseText);
+            post.log(error.responseText);
           },
         });
     },

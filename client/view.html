@@ -176,9 +176,9 @@
 
         UWA.Event.onDomReady(function () {
           console.log("inside onDomReady");
-          require(["MyProject/Model/Doc", "MyProject/View/DocumentRow"], function (doc, docRow1) {
+          require(["MyProject/Model/Doc", "MyProject/View/DocumentRow"], function (Doc, DocumentRow) {
             
-            docRow1 = new DocumentRow({
+            var docRow1 = new DocumentRow({
               //collection: posts,
               model:doc,
               id: "document-row-" + doc.id,
