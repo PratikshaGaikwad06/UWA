@@ -21,6 +21,7 @@
     "content-type": "^1.0.5",
     "cookie": "^0.5.0",
     "cookie-signature": "^1.0.6",
+    "cors": "^2.8.5",
     "debug": "^2.6.9",
     "depd": "^2.0.0",
     "destroy": "^1.2.0",
@@ -96,7 +97,8 @@
   },
   "scripts": {
     "start": "json-server -p 3000 -s client db.json",
-    "dev": "nodemon --watch client --ext html,js --exec \"json-server -p 3000 -s client --watch db.json\""
+    "dev": "nodemon --watch client --ext html,js server.js",
+    "test": "nodemon --watch client --ext html,js --exec \"json-server -p 3000 -s client --watch db.json\""
   },
   "keywords": [],
   "author": "",

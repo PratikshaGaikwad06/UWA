@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css"
+    />
+    <script src="https://uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"></script>
+    <script src="https://uwa.netvibes.com/lib/UWA/js/Controls/Scroller.js"></script>
+    <script
+      type="text/javascript"
+      src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Controls_DataGrid.js"
+    ></script>
+    <script type="module">
+      import {
+        createApp,
+        ref,
+      } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+      createApp({
+        setup() {
+          const message = ref("Hello Vue!");
+          return {
+            message,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </head>
+  <body>
+    <div id="app">{{ message }}</div>
+  </body>
+  <script>
+    "http://localhost:8071/internal/resources/caasample/todoredwire/TrainingRESTEndpoint/getAllTasks"
+    let mqlURL = UWA.Utils.composeUrl({
+      protocol: "http",
+      subprotocol: "feed",
+      authority: "localhost:8071",
+      domain: "localhost",
+      port: "8071",
+      path: "/internal/resources/caasample/todoredwire/TrainingRESTEndpoint/getAllTasks",
+    //   directoryPath: "/mypath/",
+    //   fileName: "mywidget.html",
+    //   query: "lorem=ipsum&hello=world",
+    //   anchor: "sit",
+    });
+    console.log(mqlURL.slice(5));
+
+    require([
+      "UWA/Class/Model",
+      "UWA/Class/View",
+      "UWA/Class/Collection",
+      "UWA/Controls/DataGrid",
+      "UWA/Class/Debug",
+      "UWA/Controls/Scroller",
+      "UWA/Class/Listener",
+      "UWA/String",
+    ], function (
+      Model,
+      View,
+      Collection,
+      DataGrid,
+      Debug,
+      Scroller,
+      Listener,
+      String
+    ) {
+      // console.log(View);
+      // defining post model
+      var Post = Model.extend(Debug, {
+        urlRoot: "localhost:8071",
+
+        defaults: {
+          owner: "creator",
+          name: "3DXPD",
+          "attribute[mse30Duration]": "0",
+          type: "mse30Training",
+        },
+
+        setup: function () {
+          var that = this;
+          that.log("Welcome to this post");
+        },
+      });
+
+      // defining Posts Collection model
+      var Posts = Collection.extend({
+        url: "http://localhost:8071/internal/resources/caasample/todoredwire/TrainingRESTEndpoint/getAllTasks",
+        model: Post,
+        // parse: function (response) {
+        //     return response._attributes;
+        // }
+      });
+
+      function createDatagrid(dataArray) {
+        var uwaDatagrid = new DataGrid({
+          className: "my-dataGrid",
+          columns: [
+            {
+              text: "id",
+              dataIndex: "id",
+              isFixed: true,
+              noSortable: true,
+              isFirst: true,
+            },
+            {
+              text: "owner",
+              dataIndex: "owner",
+            },
+            {
+              text: "name",
+              dataIndex: "name",
+            },
+            {
+              text: "duration",
+              dataIndex: "attribute[mse30Duration]",
+            },
+            {
+              text: "type",
+              dataIndex: "type",
+            },
+          ],
+          data: JSON.parse(JSON.stringify(dataArray)),
+          sortable: widget.getBool("sortable"),
+        });
+        uwaDatagrid.addScroller();
+        return uwaDatagrid;
+      }
+
+      var dataGrid;
+
+      var UWADatagridView = View.extend(Debug, {
+        tagName: "div",
+
+        className: "myClass",
+
+        //   domEvents: {
+        //     "click .icon": "open",
+        //     "click button.edit": "openEditDialog",
+        //     "click button.delete": "delete",
+        //   },
+
+        setup() {
+          var that = this;
+          console.log("inside setup");
+          this.collection.fetch({
+            reset: true,
+            onComplete: function (posts, response, options) {
+              // console.table(posts.toArray());
+              console.log("oncomplete" + response);
+              that.render();
+              console.log("proceeding");
+              // console.log("data grid", createDatagrid(this.collection.toArray()));
+            },
+            onFailure: function (posts, response, options) {
+              UWA.log("Oupss");
+              console.log("onfailure", posts);
+            },
+          });
+          // this.collection.fetch(); // onComplete() --> posts --> render()
+          // this.listenTo(this.model, "onChange", this.render);
+          this.log("initialized!");
+        },
+
+        domEvents: {
+          "click button.getRows": "getCollectionRows",
+          "click button.addRow": "addRowInCollection",
+          "click button.deleteRow": "deleteRowInCollection",
+        },
+
+        render() {
+          console.log("rendering");
+          // console.log(this.collection.toArray());
+          dataGrid = createDatagrid(this.collection.toArray());
+          console.log(JSON.parse(JSON.stringify(this.collection.toArray())));
+          this.container.setContent([
+            dataGrid,
+            {
+              tag: "button",
+              text: "Get",
+              class: "getRows",
+            },
+            {
+              tag: "button",
+              text: "Add",
+              class: "addRow",
+            },
+            {
+              tag: "button",
+              text: "Delete",
+              class: "deleteRow",
+            },
+          ]);
+          return this;
+        },
+        getCollectionRows() {
+          console.log("in get collection");
+          this.setup();
+        },
+
+        addRowInCollection() {
+          const that = this;
+          console.log("in add row", that);
+          const post = new Post();
+          post.save(
+            {
+              title: "Sample Title",
+              message: "Sample Message",
+            },
+            {
+              wait: true,
+              onComplete: function (post, response) {
+                post.log("Successfully saved!");
+                // console.log("added new post!", response);
+                // alert("added new post!");
+                // that.collection.fetch();
+                console.log(post.id, post.get("title"), post.get("message"));
+                that.collection.push(post);
+                that.render();
+                // that.setup();
+                // dataGrid.updateData(
+                //   ["id", "title", "message"],
+                //   [post.id, post.get("title"), post.get("message")]
+                // );
+              },
+              onFailure: function (person, error) {
+                person.log(person.toJSON());
+                person.log(error.responseText);
+                console.log(person.toJSON());
+                console.log(error.responseText);
+              },
+            }
+          );
+        },
+
+        deleteRowInCollection() {
+          console.log("in delete row");
+          const that = this;
+          const lastElement = that.collection.last();
+          lastElement.destroy();
+          that.render();
+        },
+      });
+
+      UWA.Event.onDomReady(function () {
+        console.log("inside onDomReady");
+
+        console.log();
+          var postsList = new Posts();
+          uwaDatagridView1 = new UWADatagridView({
+            collection: postsList,
+          });
+          postsList.fetch();
+          console.log(
+            "displaying postlist",
+            postsList.toArray({
+              onComplete: function (posts, response, options) {
+                console.log("posts", posts);
+              },
+            })
+          );
+          // uwaDatagridView1.render().inject(document.getElementById("docs"));
+          uwaDatagridView1.inject(document.getElementById("app"));
+
+
+        // require([
+        //   "scripts/models/Posts",
+        //   "scripts/models/Post",
+        //   "scripts/GridViews/UWADatagridView",
+        // ], function (Posts, Post, UWADatagridView) {
+          
+        // });
+      });
+    });
+  </script>
+</html>
